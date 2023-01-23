@@ -43,11 +43,8 @@ identical(Data1, beren2)
 head(beren3)
 identical(beren2, beren3)
 write.csv(beren3, 'beren_new.csv', quote=F, row.names=FALSE)
-##Q1:The first hypothesis is not appropriate because the amount he eats each day
-##differs and sometimes has no data on it, so to compare it to weight is hard to do
-##plus when looking at the graph it does not look like a positive correlation. 
-##The second hypothesis is not appropriate because you cannot confirm or deny that 
-##there is a relationship. It is not specific enough to be a good hypothesis. 
+##Q1:The first hypothesis is not appropriate because the amount he eats each day has no units specified. So you do not know if it is oz, lbs, etc., so you can't accurately test the hypothesis
+##The second hypothesis is not appropriate because you cannot confirm or deny that there is a relationship. It is not specific enough to be a good hypothesis, you would need to specify whether it is a positive or negative relationship.  
 head(beren3)
 #length(1)
 #length(Data)
@@ -103,12 +100,10 @@ plot(as.numeric(names(totalFeed)), totalFeed, type="b", pch=16, xlab="age in day
 abline(h=mean(totalFeed), lty=2, col='red')
 dev.off()
 getwd()
-##Q2:This graph is impossible to interpret because it is looking at 
-##the ounces of milk and the age in days and comparing them. 
-##The amount of milk does not include what is eaten outside of daycare and therefore 
-##would not be a good indicator of how that is related to the age which was calculated in this code. 
-source("http://jonsmitchell.com/code/plotFxn02b.R")
+##Q2:This graph is impossible to interpret because it is looking at the ounces of milk and the age in days and comparing them. The amount of milk does not include what is eaten outside of daycare and therefore would not be a good indicator of how that is related to the age which was calculated in this code.It also has multiple data points per day which makes the data difficult to interpret.  
 pdf("r02b-CumulativeMilkByTime.pdf",height = 4, width = 4)
+source("http://jonsmitchell.com/code/plotFxn02b.R")
+#pdf("r02b-CumulativeMilkByTime.pdf",height = 4, width = 4)
 dev.off()
 ?dev.off
 write.csv(Data1, 'rawdata.csv', quote=F)
@@ -167,13 +162,17 @@ cor.test(cyrus3$value[Mass], cyrus3$age[Mass])
 cyrusCorM<-cor.test(cyrus3$value[Mass], cyrus3$age[Mass])
 summary(cyrusCorM)
 cyrusANOVAM<-aov(cyrus3$value[Mass]~ cyrus3$age[Mass])
-boxplot(cyrus3$value[Mass]*1000 ~cyrus3$age[Mass], xlab= "Age in Days", ylab = "Mass in kg")
+boxplot(cyrus3$value[Mass]/1000 ~cyrus3$age[Mass], xlab= "Age in Days", ylab = "Mass in kg")
 par(las=1, mar= c(5,5,1,1), mgp=c(2, 0.5, 0), tck = -0.01)
+pdf("002_massPlot.pdf")
 plot(as.numeric(names(totalmassberen)), totalmassberen, type = "b", pch=16, xlab="Age in Days", ylab="Mass in kg", col = 'red', main="Age vs Mass")
 #plot(as.numeric(names(beren3$value=='trait_mass'), beren3$value, type="b", pch=16, xlab="Age in Days", ylab="Mass in kg", col = 'red', main = "Age vs Mass")
 points(cyrus3$value[Mass]/1000, cyrus3$age[Mass], pch=24, col = 'blue', xlab= "Age in Days", ylab="Mass in kg")
-legend(1000, 20, c("Beren", "Cyrus"), col = c('red', 'blue'), lty=2:2, cex=0.8, title="Child Name", text.font=4)
-pdf("002_massPlot.pdf")
+legend(1000, 8, c("Beren", "Cyrus"), col = c('red', 'blue'), lty=2:2, cex=0.8, title="Child Name", text.font=4)
+#cyrusregression<-lm(cyrus3$value[Mass]~cyrus3$age[Mass])
+#confint(cyrusregression)
+#abline(coef(cyrusregression), col='blue', lwd=3)
+#?lines
 #dayID2<- apply(Data2, 1, function(x)paste(x[1:3], collapse= "-"))
 #dateID2<-sapply(dayID2, as.Date, format="%Y-%m-%d", origin = "2019-04-18")
 #Data2$age<-dateID2-dateID2[which(Cyrus$event== 'birth')]
@@ -201,6 +200,17 @@ coef(cyrusregression)
 confint(cyrusregression)
 ?confint
 ?points
+pdf("linearregression.pdf")
+#plot(as.numeric(names(totalmassberen)), totalmassberen, type = "b", pch=16, xlab="Age in Days", ylab="Mass in kg", col = 'red', main="Age vs Mass")
+#points(cyrus3$value[Mass]/1000, cyrus3$age[Mass], pch=24, col = 'blue', xlab= "Age in Days", ylab="Mass in kg")
+#points(confint(cyrusregression), pch=22, col='purple', xlab="Age in Days", ylab="Mass in kg")
+#dev.off()
 plot(as.numeric(names(totalmassberen)), totalmassberen, type = "b", pch=16, xlab="Age in Days", ylab="Mass in kg", col = 'red', main="Age vs Mass")
+#plot(as.numeric(names(beren3$value=='trait_mass'), beren3$value, type="b", pch=16, xlab="Age in Days", ylab="Mass in kg", col = 'red', main = "Age vs Mass")
 points(cyrus3$value[Mass]/1000, cyrus3$age[Mass], pch=24, col = 'blue', xlab= "Age in Days", ylab="Mass in kg")
-points(confint(cyrusregression), pch=22, col='purple', xlab="Age in Days", ylab="Mass in kg")
+legend(1000, 8, c("Beren", "Cyrus"), col = c('red', 'blue'), lty=2:2, cex=0.8, title="Child Name", text.font=4)
+cyrusregression<-lm(cyrus3$value[Mass]~cyrus3$age[Mass])
+confint(cyrusregression)
+abline(coef(cyrusregression), col='blue', lwd=3)
+dev.off()
+##We are 95% confident that Cyrus will be between 15.62 and 79.85 kg at his next appointment. 
