@@ -141,34 +141,38 @@ plot(as.numeric(names(totalmassberen)), totalmassberen, type = "b", pch=16, xlab
 #?points
 #Feedsc<-which(Data2$event =='bottle')
 #cyrusMilk<-Data2[Feedsc]
-Mass<-which(Data2$event=='trait_mass')
-avgmasscyrus<-mean(Data2$value[Mass])
-dayID2<-apply(Data2, 1, function(x) paste(x[1:3], collapse = "-"))
-dateID2<-sapply(dayID2, as.Date, format="%Y-%m-%d", origin = "2019-04-18")
-Data2$age<-dateID2-dateID2[which(Data2$event== 'birth')]
-head(Data2)
 cyrus2<-Data2
 cyrus3<-cyrus2[order(cyrus2$age),]
 write.csv(cyrus3, 'cyrus_new.csv', quote=F, row.names=FALSE)
-avgmasscyrus<-tapply(cyrus3$value[Mass], cyrus3$age[Mass])
-varmasscyrus<-tapply(cyrus3$value[Mass], cyrus3$age[Mass], var)
-totalmasscyrus<-tapply(cyrus3$value[Mass], cyrus3$age[Mass], sum)
-nummasscyrus<-tapply(cyrus3$value[Mass], cyrus3$age[Mass], length)
+Mass2<-which(cyrus3$event=='trait_mass')
+avgmasscyrus<-mean(cyrus3$value[Mass2])
+dayID2<-apply(cyrus3, 1, function(x) paste(x[1:3], collapse = "-"))
+dateID2<-sapply(dayID2, as.Date, format="%Y-%m-%d", origin = "2022-04-12")
+Data2$age<-dateID2-dateID2[which(cyrus3$event== 'birth')]
+head(cyrus3)
+#cyrus2<-Data2
+#cyrus3<-cyrus2[order(cyrus2$age),]
+#write.csv(cyrus3, 'cyrus_new.csv', quote=F, row.names=FALSE)
+avgmasscyrus<-tapply(cyrus3$value[Mass2], cyrus3$age[Mass2])
+varmasscyrus<-tapply(cyrus3$value[Mass2], cyrus3$age[Mass2], var)
+totalmasscyrus<-tapply(cyrus3$value[Mass2], cyrus3$age[Mass2], sum)
+nummasscyrus<-tapply(cyrus3$value[Mass2], cyrus3$age[Mass2], length)
 avgmasscyrus
 totalmasscyrus
 nummasscyrus
-cor(cyrus3$value[Mass], cyrus3$age[Mass])
-cor.test(cyrus3$value[Mass], cyrus3$age[Mass])
-cyrusCorM<-cor.test(cyrus3$value[Mass], cyrus3$age[Mass])
+cor(cyrus3$value[Mass2], cyrus3$age[Mass2])
+cor.test(cyrus3$value[Mass2], cyrus3$age[Mass2])
+cyrusCorM<-cor.test(cyrus3$value[Mass2], cyrus3$age[Mass2])
 summary(cyrusCorM)
-cyrusANOVAM<-aov(cyrus3$value[Mass]~ cyrus3$age[Mass])
-boxplot(cyrus3$value[Mass]/1000 ~cyrus3$age[Mass], xlab= "Age in Days", ylab = "Mass in kg")
+cyrusANOVAM<-aov(cyrus3$value[Mass2]~ cyrus3$age[Mass2])
+boxplot(cyrus3$value[Mass2]/1000 ~cyrus3$age[Mass2], xlab= "Age in Days", ylab = "Mass in kg")
 par(las=1, mar= c(5,5,1,1), mgp=c(2, 0.5, 0), tck = -0.01)
 pdf("002_massPlot.pdf")
-plot(as.numeric(names(totalmassberen)), totalmassberen, type = "b", pch=16, xlab="Age in Days", ylab="Mass in kg", col = 'red', main="Age vs Mass")
+plot(as.numeric(names(totalmassberen)), totalmassberen, type = "b", pch=16, xlab="Age in Days", ylab="Mass in kg", col = 'red', main="Beren and Cyrus Age vs Mass", ylim=c(4,18))
 #plot(as.numeric(names(beren3$value=='trait_mass'), beren3$value, type="b", pch=16, xlab="Age in Days", ylab="Mass in kg", col = 'red', main = "Age vs Mass")
-points(cyrus3$value[Mass]/1000, cyrus3$age[Mass], pch=24, col = 'blue', xlab= "Age in Days", ylab="Mass in kg")
+points(cyrus3$age[Mass2], cyrus3$value[Mass2]/1000, type="b",pch=24, col = 'blue', xlab= "Age in Days", ylab="Mass in kg")
 legend(1000, 8, c("Beren", "Cyrus"), col = c('red', 'blue'), lty=2:2, cex=0.8, title="Child Name", text.font=4)
+dev.off()
 #cyrusregression<-lm(cyrus3$value[Mass]~cyrus3$age[Mass])
 #confint(cyrusregression)
 #abline(coef(cyrusregression), col='blue', lwd=3)
@@ -190,7 +194,8 @@ legend(1000, 8, c("Beren", "Cyrus"), col = c('red', 'blue'), lty=2:2, cex=0.8, t
 #points(cyrus3$age[totalmasscyrus], totalmasscyrus*1000, type = "b", col = 'blue', pch=24, xlab="Age in Days", ylab= "Mass in g")
 #legend(beren3, cyrus3, legend = c(beren3, cyrus3), col = c('red', 'blue'), pch = c(16, 24))
 dev.off()
-cyrusregression<-lm(cyrus3$value[Mass]~cyrus3$age[Mass])
+#EC
+cyrusregression<-lm(cyrus3$age[Mass2]~cyrus3$value[Mass2])
 summary(cyrusregression)
 ##We are 95% confident that Cyrus will be between 15.62 and 79.85 kg at his next appointment. 
 #cor(cyrus3$value[Mass], cyrus3$age[Mass])
@@ -205,12 +210,12 @@ pdf("linearregression.pdf")
 #points(cyrus3$value[Mass]/1000, cyrus3$age[Mass], pch=24, col = 'blue', xlab= "Age in Days", ylab="Mass in kg")
 #points(confint(cyrusregression), pch=22, col='purple', xlab="Age in Days", ylab="Mass in kg")
 #dev.off()
-plot(as.numeric(names(totalmassberen)), totalmassberen, type = "b", pch=16, xlab="Age in Days", ylab="Mass in kg", col = 'red', main="Age vs Mass")
+plot(as.numeric(names(totalmassberen)), totalmassberen, type = "b", pch=16, xlab="Age in Days", ylab="Mass in kg", col = 'red', main="Age vs Mass", ylim=c(4,18))
 #plot(as.numeric(names(beren3$value=='trait_mass'), beren3$value, type="b", pch=16, xlab="Age in Days", ylab="Mass in kg", col = 'red', main = "Age vs Mass")
-points(cyrus3$value[Mass]/1000, cyrus3$age[Mass], pch=24, col = 'blue', xlab= "Age in Days", ylab="Mass in kg")
+points(cyrus3$age[Mass2], cyrus3$value[Mass2]/1000, pch=24, col = 'blue', xlab= "Age in Days", ylab="Mass in kg")
 legend(1000, 8, c("Beren", "Cyrus"), col = c('red', 'blue'), lty=2:2, cex=0.8, title="Child Name", text.font=4)
-cyrusregression<-lm(cyrus3$value[Mass]~cyrus3$age[Mass])
+cyrusregression<-lm(cyrus3$age[Mass2]~cyrus3$value[Mass2])
 confint(cyrusregression)
-abline(coef(cyrusregression), col='blue', lwd=3)
+#abline(coef(cyrusregression), col='blue', lwd=3)
 dev.off()
-##We are 95% confident that Cyrus will be between 15.62 and 79.85 kg at his next appointment. 
+##We are 95% confident that Cyrus will be between 26.55588 and 41.99408 kg at his next appointment. 
