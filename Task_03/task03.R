@@ -87,7 +87,7 @@ mean(ManySiblings)
 Range<-max(ManySiblings, na.rm=TRUE)-min(ManySiblings,na.rm=TRUE)
 Range
 pdf("003_relatePlot.pdf")
-hist(ManySiblings, col='black', border="white", ylim=c(0,250))
+hist(ManySiblings, col ='black', border="purple", ylim=c(0,250), xlab= "Amount of Relatedness")
 dev.off()
 #In this we see a range of values because of genetic variation. There is a range because even though you have 50% of your mom and 50% of your dad's DNA, it does not mean that your sibling would also receive the same 50%. This means that there is variation between siblings which causes the range of values. 
 
