@@ -71,4 +71,22 @@ mtext(side=2, at=8, line=0, "sel.sim.")
 
 Simulation7<-c(Simulation2, Simulation3, Simulation4, Simulation5, Simulation6)
 addHist(Y=8, Dat=Simulation7, Color=rgb(0,0,1,0.25))
+
+#dev.off()
+#EC
+#Fit<-c(0.1, 0.2, 0.3, 0.4, 0.5, 1)
+#names(Fit)<-1:6
+#SimulationNew<-simDraws(10000, w =Fit)
+#addHist(Y=9, Dat=SimulationNew, Color="brown")
+#mtext(side=2, at=9, line=0, "mutation")
+#abline(v=11.70, lty=2, lwd=2)
+
 dev.off()
+#mu<-runif(SimulationNew, min= 0, max=60)
+#runif(mu, min=0, max=60)
+#if (mu > 30)	{
+  # check to see if it's going to mutate. 
+  #if (runif(SimulationNew) < mu )
+#       = "green"
+   # }
+    
