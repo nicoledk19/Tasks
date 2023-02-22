@@ -94,3 +94,17 @@ ggplot(data=fst.df, aes(x=Site1, y=Site2, fill=Fst))+
         legend.text=element_text(size=10)
   )
 dev.off()
+
+#learnPopGen
+install.packages('learnPopGen')
+library(learnPopGen) 
+
+pdf("Coalescent1.pdf")
+coalescent.plot()
+
+pdf("Coalescent2.pdf")
+coalescent.plot()
+
+pdf("Coalescent3.pdf")
+coalescent.plot()
+dev.off()
