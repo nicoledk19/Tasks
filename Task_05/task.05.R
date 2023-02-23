@@ -108,3 +108,37 @@ coalescent.plot()
 pdf("Coalescent3.pdf")
 coalescent.plot()
 dev.off()
+
+#extracredit
+install.packages('coala')
+library(coala)
+
+model<-coal_model(sample_size=1000, loci_number = 2) + feat_mutation(0.5) + sumstat_nucleotide_div()
+
+simulate(model)
+
+model1<-coal_model(sample_size=1000, loci_number = 2) + feat_mutation(1) + sumstat_nucleotide_div()
+
+simulate(model1)
+
+mutation<-c(model)
+x<-1
+for(x in mutation){
+  if(x<1000){
+    simulate(model)
+    x+1
+  }
+}  
+check_model(model)
+x <- simulate(model)
+
+dev.off()
+
+pdf("005_extracredit.pdf")
+plot(10,5)
+dev.off()
+
+mutation
+plot(mutation, pi)
+length(mutation)
+length(pi)
