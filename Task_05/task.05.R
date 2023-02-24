@@ -113,32 +113,28 @@ dev.off()
 install.packages('coala')
 library(coala)
 
-model<-coal_model(sample_size=1000, loci_number = 2) + feat_mutation(0.5) + sumstat_nucleotide_div()
 
-simulate(model)
+model1<-coal_model(sample_size=100, loci_number = 10) + feat_mutation(0.5) + sumstat_nucleotide_div()
+stat1<-simulate(model1)
+diversity1<-stat1$pi
+diversity1
+#segsites<-create_segsites(matrix(sumstat_nucleotide_div()))
+#+calc_sumstats_from_data(model=model, list(segsites)) 
 
-model1<-coal_model(sample_size=1000, loci_number = 2) + feat_mutation(1) + sumstat_nucleotide_div()
+model2<-coal_model(sample_size=100, loci_number = 10) + feat_mutation(0) + sumstat_nucleotide_div()
+stat2<-simulate(model2)
+diversity2<-stat2$pi
+diversity2
 
-simulate(model1)
-
-mutation<-c(model)
-x<-1
-for(x in mutation){
-  if(x<1000){
-    simulate(model)
-    x+1
-  }
-}  
-check_model(model)
-x <- simulate(model)
+#plot(diversity1, diversity2, xlim=c(0,1.5), ylim=c(0,10))
 
 dev.off()
 
 pdf("005_extracredit.pdf")
-plot(10,5)
+plot(diversity1, diversity2, xlim=c(0,1.5), ylim=c(0,10))
 dev.off()
 
-mutation
-plot(mutation, pi)
-length(mutation)
-length(pi)
+#mutation
+#plot(mutation, pi)
+#length(mutation)
+#length(pi)
