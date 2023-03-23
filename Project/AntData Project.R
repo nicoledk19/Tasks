@@ -71,3 +71,10 @@ axis(1, at=c(2,3,4), labels=c("HC", "NB", "PF"))
 mtext(i, side=3, line=1.5)
 
 VARtable
+
+SpTaskCode <- sapply(1:nrow(Data1), function(x) paste(Data1[x,"Species"], Data1[x,"Task"], sep="."))
+
+SpVars <- tapply(Data1[,"Head.Width"], Data1[,"Species"], var, na.rm=T)
+SpTaskMeans <- tapply(Data1[,"Head.Width"], SpTaskCode, mean, na.rm=T)
+
+
