@@ -41,6 +41,33 @@ X <- aov(Head.Width ~ Species + Task, data=Data1)
 summary(X)
 #summary(interaction)
 
+library(nnet)
+mlr <- multinom(Task ~ Head.Width + Species, data=Data1)
+mlr
+
+Colos <- unique(Data1$Colony)
+ByColony <- matrix(data=0, nrow=length(Colos), ncol=3)
+colnames(ByColony) <- c("HC", "NB", "PF")
+Spp <- c()
+for (i in 1:length(Colos)){
+  sub <- Data1[which(Data1$Colony == Colos[i]),]
+  Dat <- tapply(sub$Head.Width, sub$Task, mean, na.rm=T)
+  ByColony[i,names(Dat)] <- Dat
+  Spp[i] <- sub$Species[1]
+}
+
+Cols <- rainbow(10)
+names(Cols) <- unique(Data1$Species)
+par(mfrow=c(1,3))
+plot(ByColony[,"NB"], ByColony[,"HC"], pch=16, col=Cols[Spp])
+legend("bottomleft", col=Cols, legend=names(Cols), pch=16)
+plot(ByColony[,"NB"], ByColony[,"PF"], pch=16, col=Cols[Spp])
+plot(ByColony[,"PF"], ByColony[,"HC"], pch=16, col=Cols[Spp])
+dev.off()
+
+
+
+
 #install.packages("AICcmodavg")
 #library(AICcmodavg)
 #model.set<-list(X, interaction)
