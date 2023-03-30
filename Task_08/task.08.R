@@ -71,3 +71,9 @@ traitMat
 pdf("08_plot.pdf")
 plot(traitMat)
 dev.off()
+
+#EC
+pdf("08_ec.pdf")
+phylomorphospace(Tree, traitMat)
+phylomorphospace
+dev.off()
