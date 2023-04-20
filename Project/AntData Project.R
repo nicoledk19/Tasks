@@ -144,3 +144,10 @@ SpVars <- tapply(Data1[,"Head.Width"], Data1[,"Species"], var, na.rm=T)
 SpTaskMeans <- tapply(Data1[,"Head.Width"], SpTaskCode, mean, na.rm=T)
 
 #The output coefficients are shown as log of odds and in order to make them easier to understand and interpret, we exponentiate the coefficients. After being exponentiated NB to HC the output coefficient was 70.98. The output coefficient for PF to HC was 37.46. 
+
+text.string<-
+  "((F. Ulkei), (((F. rufa sp. 2), (F. rufa sp. 1, F. obscuriventris)), (F. dakotensis, F. aserva)), ((F. neorufibarbis), ((F. neoclara), (F. glacialis, F. poszolica))));"
+vert.tree<-read.tree(text=text.string)
+plot(vert.tree, edge.width=2)
+
+R.version

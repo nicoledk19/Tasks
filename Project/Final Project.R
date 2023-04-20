@@ -50,7 +50,6 @@ exp(confint(mlr))
 
 Data1$Task<-factor(Data1$Task, levels=c("HC", "NB", "PF"))
 
-
 table(Data1$Task)
 prop.table(table(Data1$Task))
 
@@ -65,7 +64,7 @@ confint(mlr2)
 exp(confint(mlr2))
 
 jpeg("HeadWidthbyTaskboxplot.jpeg")
-ggplot(Data1)+aes(x=Task, y=Head.Width)+geom_boxplot()
+totalplot<-ggplot(Data1)+aes(x=Task, y=Head.Width)+geom_boxplot()
 dev.off()
 
 jpeg("HeadWidthbyTaskscatterplot.jpeg")
@@ -88,3 +87,9 @@ for (i in 1:length(mlr_ME$x)){
 }
 dev.off()
 
+jpeg("Phylogeny.jpeg")
+text.string<-
+  "((F. Ulkei), (((F. Rufa Sp. #2), (F. Rufa Sp. #1, F. Obscuriventris)), (F. Dakotensis, F. Aserva)), ((F. Neorufibarbis), ((F. Neoclara), (F. Glacialis, F. Podzolica))));"
+vert.tree<-read.tree(text=text.string)
+plot(vert.tree, edge.width=2)
+dev.off()
