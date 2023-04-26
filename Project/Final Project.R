@@ -30,7 +30,6 @@ for (i in unique(Data1$Species)){
   dev.off()
 }
 
-chisq.test(Data1$Task, Data1$Head.Width, simulate.p.value=TRUE)
 
 #multinomial logistic regression looking at head width and species impact on task assignment
 library(nnet)
