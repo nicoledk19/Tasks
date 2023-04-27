@@ -39,9 +39,19 @@ coef(reg1)
 #slope is 0 and intercept is 0. 
 
 #meme Extra Credit
-install.packages("memery")
-??memery
-library(memery)
+#install.packages("memery")
+#??memery
+#library("memery")
+install.packages("devtools")
+devtools::install_github("sctyner/memer")
+library(memer)
+
+jpeg(filename="ForMeme1.jpeg")
+meme_list()
+memer::meme_get("Y-U-NOguy")%>%
+  meme_text_top("Y U No Do A For Loop") %>%
+  meme_text_bottom("Bc idk howwww")
+dev.off()
 
 #pic<-"https://www.liveabout.com/thmb/Fl0EUNIe7GbyBGivnKj-FDNB06s=/2133x1406/filters:fill(auto,1)/the-15-best-think-memes-4165651-1-5b05bcb5ff1b78003bd125c9.jpg"
 txt1<-c("Can you put this in a for loop?", "ummm")

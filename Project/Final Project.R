@@ -62,6 +62,11 @@ exp(coef(mlr2)['PF', 'Head.Width'])
 confint(mlr2)
 exp(confint(mlr2))
 
+mlr3<-multinom(Task~Head.Width+Group, data=Data1)
+mlr3
+summary(mlr3)
+confint(mlr3)
+
 jpeg("HeadWidthbyTaskboxplot.jpeg")
 totalplot<-ggplot(Data1)+aes(x=Task, y=Head.Width)+geom_boxplot()
 dev.off()
