@@ -68,7 +68,7 @@ summary(mlr3)
 confint(mlr3)
 
 GLM <- glm(Head.Width~Task*Group, data=Data1)
-summary(GLM)
+summary(G)
 
 jpeg("HeadWidthbyTaskboxplot.jpeg")
 totalplot<-ggplot(Data1)+aes(x=Task, y=Head.Width)+geom_boxplot()
