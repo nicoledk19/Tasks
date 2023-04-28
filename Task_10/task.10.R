@@ -36,7 +36,7 @@ dev.off()
 reg1<-lm(slope1~z)
 reg1
 coef(reg1)
-#slope is 0 and intercept is 0. 
+#slope is 0.055 and the intercept is 1.04. 
 
 #meme Extra Credit
 #install.packages("memery")
@@ -90,3 +90,4 @@ pdf("plot10_ec01.pdf")
 barplot(height, legend.text= c("Switching", "No Switching"), col = c("red", "blue"), names.arg=c("Switching", "No Switching"), main="Chances of Winning Prize", ylab="Chance of Winning Out of 10,000")
 dev.off()
 
+#Averee Torres and I worked together on this assignment. 

@@ -62,10 +62,13 @@ exp(coef(mlr2)['PF', 'Head.Width'])
 confint(mlr2)
 exp(confint(mlr2))
 
-mlr3<-multinom(Task~Head.Width+Group, data=Data1)
+mlr3<-multinom(Task~Head.Width*Group, data=Data1)
 mlr3
 summary(mlr3)
 confint(mlr3)
+
+GLM <- glm(Head.Width~Task*Group, data=Data1)
+summary(GLM)
 
 jpeg("HeadWidthbyTaskboxplot.jpeg")
 totalplot<-ggplot(Data1)+aes(x=Task, y=Head.Width)+geom_boxplot()
@@ -86,11 +89,16 @@ Cols <- c('#a6cee3','#1f78b4','#b2df8a')
 names(Cols) <- c("HC", "NB", "PF")
 plot(mlr_ME$x, mlr_ME$predicted, pch=16, col=Cols[mlr_ME$response.level], xlim=c(0, 2.5), ylim=c(0,1), ylab="Predicted Probabilities", xlab="Head Width")
 
+legend("topright", legend=names(Cols), col=Cols, pch=15)
+
+
 for (i in 1:length(mlr_ME$x)){
   segments(mlr_ME$x[i], mlr_ME$conf.low[i], mlr_ME$x[i], mlr_ME$conf.high[i], lwd=1, col=Cols[mlr_ME$response.level[i]])
 }
 dev.off()
 
+library("ape")
+library("phytools")
 jpeg("Phylogeny.jpeg")
 text.string<-
   "((F. Ulkei), (((F. Rufa Sp. #2), (F. Rufa Sp. #1, F. Obscuriventris)), (F. Dakotensis, F. Aserva)), ((F. Neorufibarbis), ((F. Neoclara), (F. Glacialis, F. Podzolica))));"
